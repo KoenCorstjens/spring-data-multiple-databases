@@ -24,17 +24,16 @@ import javax.sql.DataSource;
         transactionManagerRef = "db2TransactionManager")
 public class ConfigDB2 {
 
-    @Autowired
     @Bean(name = "db2DataSourceProperties")
     @ConfigurationProperties("demo.corstjens.db2")
-    public DataSourceProperties db2DataSourceProperties() {
+    public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }
 
     @Autowired
     @Bean(name = "db2DataSource")
-    public DataSource db2DataSource(@Qualifier("db2DataSourceProperties") DataSourceProperties db2DataSourceProperties) {
-        return db2DataSourceProperties.initializeDataSourceBuilder().build();
+    public DataSource db2DataSource(@Qualifier("db2DataSourceProperties") DataSourceProperties dataSourceProperties) {
+        return dataSourceProperties.initializeDataSourceBuilder().build();
     }
 
     @Autowired
