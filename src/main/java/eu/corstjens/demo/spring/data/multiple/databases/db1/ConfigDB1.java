@@ -3,7 +3,7 @@ package eu.corstjens.demo.spring.data.multiple.databases.db1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,17 +48,11 @@ public class ConfigDB1 {
     }
 
 
-    @Bean(name = "db1DataSourceProperties")
-    @Primary
-    @ConfigurationProperties("demo.corstjens.db1")
-    public DataSourceProperties db1DataSourceProperties() {
-        return new DataSourceProperties();
-    }
-
     @Bean(name = "db1DataSource")
     @Primary
+    @ConfigurationProperties("demo.corstjens.db1")
     public DataSource db1DataSource() {
-        return db1DataSourceProperties().initializeDataSourceBuilder().build();
+        return DataSourceBuilder.create().build();
     }
 
 

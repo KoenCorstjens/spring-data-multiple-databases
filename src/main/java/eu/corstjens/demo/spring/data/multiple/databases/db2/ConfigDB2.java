@@ -3,7 +3,7 @@ package eu.corstjens.demo.spring.data.multiple.databases.db2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +12,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import javax.sql.DataSource;
 
+import javax.sql.DataSource;
 
 
 /**
@@ -24,16 +24,10 @@ import javax.sql.DataSource;
         transactionManagerRef = "db2TransactionManager")
 public class ConfigDB2 {
 
-    @Bean(name = "db2DataSourceProperties")
-    @ConfigurationProperties("demo.corstjens.db2")
-    public DataSourceProperties dataSourceProperties() {
-        return new DataSourceProperties();
-    }
-
-    @Autowired
     @Bean(name = "db2DataSource")
-    public DataSource db2DataSource(@Qualifier("db2DataSourceProperties") DataSourceProperties dataSourceProperties) {
-        return dataSourceProperties.initializeDataSourceBuilder().build();
+    @ConfigurationProperties("demo.corstjens.db2")
+    public DataSource db2DataSource() {
+        return DataSourceBuilder.create().build();
     }
 
     @Autowired
